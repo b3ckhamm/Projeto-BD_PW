@@ -1,0 +1,653 @@
+Refiz o pix.php deixando o fundo somente no CSS, já que o arquivo está dentro de pagamento_sistema. Também mantive os caminhos corretos para config, img, qr.jpg e produtos.php.
+
+<?php
+
+require_once __DIR__ . "/../config/conexao.php";
+
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+$sql = "SELECT * FROM produtos WHERE id = ?";
+
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+
+$resultado = $stmt->get_result();
+
+if ($resultado->num_rows === 0) {
+    die("Produto não encontrado.");
+}
+
+$produto = $resultado->fetch_assoc();
+
+$nome = $produto['nome'];
+$preco = $produto['preco'];
+$imagem = $produto['imagem'];
+
+$chave_pix = "petlove@teste.com";
+
+$confirmado = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $confirmado = true;
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Pagamento - PetLove</title>
+
+    <link rel="stylesheet" href="pix.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Pagamento via Pix</h1>
+
+    <p>
+        Confira os dados do seu pedido.
+    </p>
+
+    <div class="produto">
+
+        <?php if (!empty($imagem)): ?>
+
+            <img
+                src="../img/<?php echo htmlspecialchars($imagem); ?>"
+                alt="<?php echo htmlspecialchars($nome); ?>"
+            >
+
+        <?php endif; ?>
+
+        <h2>
+            <?php echo htmlspecialchars($nome); ?>
+        </h2>
+
+        <p class="preco">
+            Valor a pagar:
+
+            <strong>
+                R$ <?php echo number_format($preco, 2, ',', '.'); ?>
+            </strong>
+        </p>
+
+    </div>
+
+    <h2>Pagamento via Pix</h2>
+
+    <p>
+        Escaneie o QR Code ou copie a chave Pix.
+    </p>
+
+    <div class="qrcode">
+
+        <img
+            src="qr.jpg"
+            alt="QR Code Pix"
+        >
+
+    </div>
+
+    <p class="chave">
+        Chave Pix
+    </p>
+
+    <div class="codigo">
+
+        <input
+            type="text"
+            value="<?php echo htmlspecialchars($chave_pix); ?>"
+            id="pix"
+            readonly
+        >
+
+        <button
+            type="button"
+            onclick="copiarPix()"
+        >
+            Copiar
+        </button>
+
+    </div>
+
+    <form method="POST">
+
+        <button
+            type="submit"
+            class="confirmar"
+        >
+            Confirmar pagamento
+        </button>
+
+    </form>
+
+    <?php if ($confirmado): ?>
+
+        <div class="sucesso">
+            Pagamento Pix selecionado com sucesso!
+        </div>
+
+    <?php endif; ?>
+
+    <a
+        href="../produtos.php"
+        class="voltar"
+    >
+        Voltar
+    </a>
+
+</div>
+
+<script>
+function copiarPix() {
+    const pix = document.getElementById("pix");
+
+    navigator.clipboard.writeText(pix.value);
+
+    alert("Chave Pix copiada!");
+}
+</script>
+
+</body>
+
+</html>
+
+Agora o pix.php não possui nenhum código de fundo. O fundo fica exclusivamente no pix.css:
+
+body {
+    background-image: url("../img/pix.jpg");
+}
+
+Com a estrutura:
+
+htdocs/
+├── config/
+│   └── conexao.php
+├── img/
+│   ├── pix.jpg
+│   └── qr.jpg
+├── produtos.php
+└── pagamento_sistema/
+    ├── pix.php
+    └── pix.css
+
+Isso é o caminho correto para essa estrutura.
+
+ainda nao
+
+Então vamos eliminar de vez o problema de caminho relativo. Como o pix.php está em pagamento_sistema, vamos fazer o PHP gerar o caminho absoluto a partir da raiz do site.
+
+Use este pix.php:
+
+<?php
+
+require_once __DIR__ . "/../config/conexao.php";
+
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+$sql = "SELECT * FROM produtos WHERE id = ?";
+
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+
+$resultado = $stmt->get_result();
+
+if ($resultado->num_rows === 0) {
+    die("Produto não encontrado.");
+}
+
+$produto = $resultado->fetch_assoc();
+
+$nome = $produto['nome'];
+$preco = $produto['preco'];
+$imagem = $produto['imagem'];
+
+$chave_pix = "petlove@teste.com";
+
+$confirmado = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $confirmado = true;
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pagamento - PetLove</title>
+
+    <link rel="stylesheet" href="pix.css">
+
+    <style>
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            background-image: url("/img/pix.jpg") !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Pagamento via Pix</h1>
+
+    <p>
+        Confira os dados do seu pedido.
+    </p>
+
+    <div class="produto">
+
+        <?php if (!empty($imagem)): ?>
+
+            <img
+                src="/img/<?php echo htmlspecialchars($imagem); ?>"
+                alt="<?php echo htmlspecialchars($nome); ?>"
+            >
+
+        <?php endif; ?>
+
+        <h2>
+            <?php echo htmlspecialchars($nome); ?>
+        </h2>
+
+        <p class="preco">
+            Valor a pagar:
+
+            <strong>
+                R$ <?php echo number_format($preco, 2, ',', '.'); ?>
+            </strong>
+        </p>
+
+    </div>
+
+    <h2>Pagamento via Pix</h2>
+
+    <p>
+        Escaneie o QR Code ou copie a chave Pix.
+    </p>
+
+    <div class="qrcode">
+
+        <img
+            src="qr.jpg"
+            alt="QR Code Pix"
+        >
+
+    </div>
+
+    <p class="chave">
+        Chave Pix
+    </p>
+
+    <div class="codigo">
+
+        <input
+            type="text"
+            value="<?php echo htmlspecialchars($chave_pix); ?>"
+            id="pix"
+            readonly
+        >
+
+        <button
+            type="button"
+            onclick="copiarPix()"
+        >
+            Copiar
+        </button>
+
+    </div>
+
+    <form method="POST">
+
+        <button
+            type="submit"
+            class="confirmar"
+        >
+            Confirmar pagamento
+        </button>
+
+    </form>
+
+    <?php if ($confirmado): ?>
+
+        <div class="sucesso">
+            Pagamento Pix selecionado com sucesso!
+        </div>
+
+    <?php endif; ?>
+
+    <a
+        href="../produtos.php"
+        class="voltar"
+    >
+        Voltar
+    </a>
+
+</div>
+
+<script>
+function copiarPix() {
+    const pix = document.getElementById("pix");
+
+    navigator.clipboard.writeText(pix.value);
+
+    alert("Chave Pix copiada!");
+}
+</script>
+
+</body>
+
+</html>
+E faça esta alteração no pix.css
+
+Apague qualquer outro background ou background-image que esteja no body e deixe assim:
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    background: transparent;
+}
+
+O PHP agora força:
+
+/img/pix.jpg
+
+Ou seja, ele procura diretamente:
+
+htdocs/img/pix.jpg
+Importante
+
+No InfinityFree, confira se o arquivo está exatamente assim:
+
+htdocs
+└── img
+    └── pix.jpg
+
+E não:
+
+htdocs
+└── pagamento_sistema
+    └── img
+        └── pix.jpg
+
+Nem:
+
+htdocs
+└── img
+    └── Pix.jpg
+
+No servidor Linux do InfinityFree, pix.jpg e Pix.jpg são diferentes. Se o arquivo estiver realmente em htdocs/img/pix.jpg, o código acima deve buscar exatamente esse arquivo.
+
+refaça o css
+
+Use este pix.css completo. Aqui o fundo fica configurado diretamente no CSS com /img/pix.jpg, enquanto o PHP também está preparado para usar a mesma estrutura.
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    background-image: url("/img/pix.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.96);
+    padding: 35px;
+    border-radius: 15px;
+    border-top: 5px solid #2E8B57;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.container h1 {
+    color: #2E8B57;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.container > p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.produto {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.produto img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.produto h2 {
+    color: #2E8B57;
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.preco {
+    color: #555;
+    margin-bottom: 0;
+}
+
+.preco strong {
+    color: #2E8B57;
+    font-size: 20px;
+}
+
+.container h2 {
+    color: #2E8B57;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.qrcode {
+    margin: 20px 0;
+}
+
+.qrcode img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.chave {
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.codigo {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.codigo input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
+}
+
+.codigo input:focus {
+    border-color: #2E8B57;
+}
+
+.codigo button {
+    padding: 12px 18px;
+    border: 2px solid #FFD700;
+    border-radius: 8px;
+    background: #2E8B57;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.codigo button:hover {
+    background: #FFD700;
+    color: #2E8B57;
+}
+
+.confirmar {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid #FFD700;
+    border-radius: 8px;
+    background: #2E8B57;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.confirmar:hover {
+    background: #FFD700;
+    color: #2E8B57;
+}
+
+.sucesso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #81c784;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.voltar {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background: #eee;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.voltar:hover {
+    background: #ddd;
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .container {
+        padding: 25px 20px;
+    }
+
+    .container h1 {
+        font-size: 24px;
+    }
+
+    .qrcode img {
+        width: 190px;
+        height: 190px;
+    }
+
+    .codigo {
+        flex-direction: column;
+    }
+
+    .codigo input,
+    .codigo button {
+        width: 100%;
+    }
+
+    .produto img {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+A parte importante é esta:
+
+background-image: url("/img/pix.jpg");
+
+Ela aponta diretamente para:
+
+htdocs/img/pix.jpg
+
+E como o pix.css está em:
+
+htdocs/pagamento_sistema/pix.css
+
+não use url("img/pix.jpg"), porque aí o navegador procuraria uma pasta img dentro de pagamento_sistema.

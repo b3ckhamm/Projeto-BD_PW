@@ -1,0 +1,266 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+    color: #333;
+    background-image: url("./fundo2 (2).jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+header {
+    padding: 18px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url("./fundo2 (2).jpg");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 3px 10px #0002;
+}
+
+header h1 {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    background: #2E8B57;
+    border: 3px solid #FFD700;
+    padding: 8px 15px;
+    border-radius: 10px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+nav a {
+    display: inline-block;
+    padding: 10px 14px;
+    background: #388e3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    background: #FFD700;
+    color: #2E8B57;
+    transform: translateY(-2px);
+}
+
+.banner {
+    background: linear-gradient(135deg, #e8f5e9, #f9fff7);
+    text-align: center;
+    padding: 75px 20px;
+    border-bottom: 1px solid #d8eadf;
+}
+
+.banner h2 {
+    color: #2E8B57;
+    font-size: 38px;
+    max-width: 800px;
+    margin: 0 auto 15px;
+}
+
+.banner p {
+    color: #666;
+    font-size: 17px;
+    max-width: 650px;
+    margin: 0 auto 30px;
+}
+
+.btn-comprar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 230px;
+    padding: 16px 32px;
+    background: #2E8B57;
+    color: white;
+    text-decoration: none;
+    border: 3px solid #FFD700;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 8px 20px #0003;
+    transition: 0.3s;
+}
+
+.btn-comprar:hover {
+    background: #FFD700;
+    color: #2E8B57;
+    border-color: #2E8B57;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px #0004;
+}
+
+.btn-comprar:active {
+    transform: translateY(-1px);
+}
+
+.historia {
+    width: 90%;
+    max-width: 900px;
+    margin: 45px auto;
+    padding: 35px;
+    background: white;
+    border-radius: 18px;
+    border-top: 5px solid #4caf50;
+    box-shadow: 0 6px 20px #0002;
+    text-align: center;
+}
+
+.historia h2 {
+    color: #2E8B57;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.historia p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 750px;
+    margin: 0 auto 12px;
+}
+
+footer {
+    background: #2E8B57;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    margin-top: 45px;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+@media (max-width: 800px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    nav a {
+        padding: 9px 12px;
+        font-size: 14px;
+    }
+
+    .banner {
+        padding: 55px 20px;
+    }
+
+    .banner h2 {
+        font-size: 30px;
+    }
+
+    .banner p {
+        font-size: 15px;
+    }
+
+    .historia {
+        width: 92%;
+        padding: 28px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 27px;
+        padding: 7px 13px;
+    }
+
+    nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .banner {
+        padding: 45px 15px;
+    }
+
+    .banner h2 {
+        font-size: 25px;
+    }
+
+    .banner p {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .btn-comprar {
+        width: 100%;
+        min-width: 0;
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+
+    .historia {
+        width: 95%;
+        padding: 25px 18px;
+    }
+
+    .historia h2 {
+        font-size: 24px;
+    }
+
+    .historia p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 400px) {
+
+    header h1 {
+        font-size: 24px;
+        padding: 6px 11px;
+    }
+
+    .banner h2 {
+        font-size: 22px;
+    }
+
+    .banner p {
+        font-size: 13px;
+    }
+
+    .btn-comprar {
+        padding: 13px;
+        font-size: 15px;
+    }
+
+    .historia h2 {
+        font-size: 21px;
+    }
+
+    footer p {
+        font-size: 12px;
+    }
+}

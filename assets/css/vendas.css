@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    color: #2E8B57;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+h1 span {
+    color: #FFD700;
+}
+
+h2 {
+    text-align: center;
+    color: #2E8B57;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.voltar {
+    display: inline-block;
+    background: #2E8B57;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.voltar:hover {
+    background: #FFD700;
+    color: #2E8B57;
+}
+
+.vendas {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.venda {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #0002;
+    border: 1px solid #ddd;
+}
+
+.venda:hover {
+    border-color: #2E8B57;
+}
+
+.venda-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.venda-header h3 {
+    color: #2E8B57;
+}
+
+.venda-header span {
+    color: #666;
+    font-size: 14px;
+}
+
+.venda p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.venda strong {
+    color: #333;
+}
+
+.itens {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.itens h4 {
+    color: #2E8B57;
+    margin-bottom: 12px;
+}
+
+.item {
+    background: #f8f8f8;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item p {
+    margin: 0;
+}
+
+.total {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #2E8B57;
+    text-align: right;
+    color: #2E8B57;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nenhuma {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    color: #666;
+    box-shadow: 0 5px 15px #0002;
+}
+
+@media (max-width: 700px) {
+    .container {
+        width: 92%;
+        margin: 25px auto;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .acoes {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .voltar {
+        text-align: center;
+    }
+
+    .venda {
+        padding: 18px;
+    }
+
+    .venda-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .total {
+        text-align: left;
+    }
+}

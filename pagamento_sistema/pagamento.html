@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Forma de Pagamento</title>
+
+    <link
+        rel="stylesheet"
+        href="pagamento.css"
+    >
+
+    <style>
+        body {
+            background-image: url("../img/indian.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Forma de Pagamento</h1>
+
+    <p>
+        Escolha uma forma de pagamento:
+    </p>
+
+    <div class="pagamentos">
+
+        <a
+            href="pix.php"
+            class="pix"
+            id="link-pix"
+        >
+            Pix
+        </a>
+
+    </div>
+
+    <a
+        href="../index.html"
+        class="voltar"
+    >
+        Voltar
+    </a>
+
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (id) {
+        document.getElementById('link-pix').href =
+            `pix.php?id=${encodeURIComponent(id)}`;
+    }
+</script>
+
+</body>
+
+</html>

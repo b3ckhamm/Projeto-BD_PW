@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+    color: #333;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    color: #2E8B57;
+    margin-bottom: 30px;
+}
+
+h1 span {
+    color: #FFD700;
+}
+
+h2 {
+    color: #2E8B57;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.acoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+}
+
+.acoes a,
+.botoes a,
+button {
+    padding: 11px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #FFD700;
+    cursor: pointer;
+}
+
+.adicionar {
+    background: #2E8B57;
+    color: white;
+}
+
+.voltar {
+    background: #666;
+    color: white;
+}
+
+.editar {
+    background: #FFD700;
+    color: #333;
+}
+
+.excluir {
+    background: #d9534f;
+    color: white;
+}
+
+.pets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.pet {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 15px #0002;
+}
+
+.pet h3 {
+    color: #2E8B57;
+    margin-bottom: 15px;
+}
+
+.pet p {
+    margin-bottom: 8px;
+    color: #666;
+}
+
+.botoes {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+form {
+    max-width: 500px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #0002;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+form button {
+    width: 100%;
+    background: #2E8B57;
+    color: white;
+    font-size: 16px;
+}
+
+form button:hover {
+    background: #FFD700;
+    color: #2E8B57;
+}
+
+.nenhum {
+    text-align: center;
+    grid-column: 1 / -1;
+    color: #666;
+}
+
+@media (max-width: 900px) {
+    .pets {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .container {
+        width: 92%;
+        margin: 25px auto;
+    }
+
+    .pets {
+        grid-template-columns: 1fr;
+    }
+
+    .acoes {
+        flex-direction: column;
+    }
+
+    .acoes a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .botoes {
+        flex-direction: column;
+    }
+
+    .botoes a {
+        text-align: center;
+    }
+}
